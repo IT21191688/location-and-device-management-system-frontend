@@ -10,6 +10,7 @@ import AddNewLocation from "./components/AddNewLocation";
 import UpdateLocation from "./components/UpdateLocation";
 import AdminHomeLocations from "./components/AdminHomeLocations";
 import AdminHomeDevices from "./components/AdminHomeDevices";
+import AddNewDevice from "./components/AddNewDevice";
 
 function App() {
   const [user, setUser] = useState<string | null>(null);
@@ -36,6 +37,7 @@ function App() {
               <Route path="/addNewLocation" element={<AddNewLocation />} />
               <Route path="/adminHome" element={<AdminHome />} />
               <Route path="/adminHomeDevices" element={<AdminHomeDevices />} />
+              <Route path="/addNewDevice" element={<AddNewDevice />} />
               <Route
                 path="/updateLocation/:locationId"
                 element={<UpdateLocation />}

@@ -77,7 +77,7 @@ const AdminHomeDevices = () => {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800">All Devices</h1>
           <Link
-            to="/device/add"
+            to="/addNewDevice"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
           >
             Add New Device
