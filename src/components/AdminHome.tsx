@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { showErrorToast } from "./services/AlertService";
 
 const AdminHome = () => {
   const [locations, setLocations] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchLocations();
@@ -50,23 +53,35 @@ const AdminHome = () => {
   };
 
   const handleUpdateClick = (locationId: any) => {
-    // Handle update button click action
-    console.log("Update button clicked for location:", locationId);
+    navigate("/updateLocation/" + locationId);
   };
+
+  const filteredLocations = locations.filter((location) =>
+    location.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="min-h-screen bg-gray-100 py-6 flex flex-col sm:py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800">All Locations</h1>
-          <Link
-            to="/AddLocationPage"
-            className="inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
-          >
-            Add New Location
-          </Link>
+          <div className="flex items-center">
+            <input
+              type="text"
+              placeholder="Search by name"
+              className="border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 mr-4"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Link
+              to="/addNewLocation"
+              className="inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+            >
+              Add New Location
+            </Link>
+          </div>
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto border border-gray-300 rounded-lg">
           <table className="min-w-full table-auto">
             <thead>
               <tr>
@@ -78,7 +93,7 @@ const AdminHome = () => {
               </tr>
             </thead>
             <tbody>
-              {locations.map((location) => (
+              {filteredLocations.map((location) => (
                 <tr
                   key={location._id}
                   onClick={() => handleRowClick(location._id)}

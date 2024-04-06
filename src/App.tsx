@@ -6,6 +6,8 @@ import AdminHome from "./components/AdminHome";
 import NavBar from "./components/NavBar";
 import AdminRegister from "./components/AdminRegister";
 import LoginPage from "./components/LoginPage";
+import AddNewLocation from "./components/AddNewLocation";
+import UpdateLocation from "./components/UpdateLocation";
 
 function App() {
   const [user, setUser] = useState<string | null>(null);
@@ -26,8 +28,11 @@ function App() {
             <>
               <Route path="/register" element={<AdminRegister />} />
               <Route path="/adminHome" element={<AdminHome />} />
-              {/* <Route path="/AddNotePage" element={<AddNotePage />} /> */}
-              {/* <Route path="/EditNotePage/:noteId" element={<EditNotePage />} /> */}
+              <Route path="/addNewLocation" element={<AddNewLocation />} />
+              <Route
+                path="/updateLocation/:locationId"
+                element={<UpdateLocation />}
+              />
             </>
           )}
           <Route path="/" element={<LoginPage />} />

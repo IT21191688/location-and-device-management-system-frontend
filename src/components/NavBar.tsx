@@ -34,7 +34,7 @@ export default function NavBar() {
               className="h-12 w-12 rounded-full object-cover"
             />
             <a className="text-white text-3xl font-bold ml-5" href="#">
-              Note Management System
+              Location And Device Management System
             </a>
           </div>
 
@@ -43,7 +43,7 @@ export default function NavBar() {
               {isLoggedIn ? (
                 <>
                   <li className="nav-item">
-                    <a className="nav-link" href="/userHome">
+                    <a className="nav-link" href="/adminHome">
                       Dashboard
                     </a>
                   </li>
