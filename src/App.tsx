@@ -8,6 +8,8 @@ import AdminRegister from "./components/AdminRegister";
 import LoginPage from "./components/LoginPage";
 import AddNewLocation from "./components/AddNewLocation";
 import UpdateLocation from "./components/UpdateLocation";
+import AdminHomeLocations from "./components/AdminHomeLocations";
+import AdminHomeDevices from "./components/AdminHomeDevices";
 
 function App() {
   const [user, setUser] = useState<string | null>(null);
@@ -27,12 +29,18 @@ function App() {
           {user === "user" && (
             <>
               <Route path="/register" element={<AdminRegister />} />
-              <Route path="/adminHome" element={<AdminHome />} />
+              <Route
+                path="/adminHomeLocations"
+                element={<AdminHomeLocations />}
+              />
               <Route path="/addNewLocation" element={<AddNewLocation />} />
+              <Route path="/adminHome" element={<AdminHome />} />
+              <Route path="/adminHomeDevices" element={<AdminHomeDevices />} />
               <Route
                 path="/updateLocation/:locationId"
                 element={<UpdateLocation />}
               />
+              <Route path="/viewAllDevices" element={<UpdateLocation />} />
             </>
           )}
           <Route path="/" element={<LoginPage />} />
