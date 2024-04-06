@@ -5,7 +5,7 @@ import {
   faUserPlus,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import Logo from "../assets/logo.jpg";
+//import Logo from "../assets/Logo.jpg";
 
 export default function NavBar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -29,7 +29,7 @@ export default function NavBar() {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <img
-              src={Logo}
+              //src={Logo}
               alt="Logo"
               className="h-12 w-12 rounded-full object-cover"
             />

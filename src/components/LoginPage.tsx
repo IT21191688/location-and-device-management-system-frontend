@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "https://note-management-system-backend-3.onrender.com/api/v1/user/login",
+        "http://localhost:8008/api/v1/user/login",
         {
           email: email,
           password: password,
@@ -49,7 +49,7 @@ const LoginPage: React.FC = () => {
       } else {
         showSuccessToast("Login successful!");
         setTimeout(() => {
-          navigate("/userHome");
+          navigate("/adminHome");
           window.location.reload();
         }, 2000);
       }
@@ -76,14 +76,8 @@ const LoginPage: React.FC = () => {
       <div className="w-full max-w-md">
         <div className="bg-white shadow-lg rounded-lg p-8">
           <div className="flex justify-center mb-6">
-            <img
-              //src={Logo}
-              alt="Logo"
-              className="h-16 w-16 rounded-full object-cover"
-            />
-            <h1 className="text-3xl font-bold text-center ml-4">
-              Note Management System
-            </h1>
+            {/* Your logo */}
+            <h1 className="text-3xl font-bold text-center ml-4">Login</h1>
           </div>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
@@ -96,8 +90,8 @@ const LoginPage: React.FC = () => {
               <input
                 type="email"
                 id="email"
-                className={`w-full border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  emailError && "border-red-500"
+                className={`w-full border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-950 focus:border-red-950 ${
+                  emailError ? "border-red-500" : ""
                 }`}
                 placeholder="Enter your email"
                 required
@@ -122,7 +116,7 @@ const LoginPage: React.FC = () => {
               <input
                 type="password"
                 id="password"
-                className={`w-full border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`w-full border-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                   passwordError && "border-red-500"
                 }`}
                 placeholder="Enter your password"
@@ -136,21 +130,12 @@ const LoginPage: React.FC = () => {
               {passwordError && (
                 <div className="text-red-500 text-sm mt-1">{passwordError}</div>
               )}
-            </div>
 
-            <div className="flex justify-between items-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-300"
+                className="bg-orange-400 text-white rounded-md w-full py-2 px-4 mt-4 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-300"
               >
                 Login
-              </button>
-              <button
-                type="button"
-                className="text-blue-500 hover:text-blue-600 transition-colors duration-300"
-                onClick={handleSignUp}
-              >
-                Sign Up
               </button>
             </div>
           </form>
