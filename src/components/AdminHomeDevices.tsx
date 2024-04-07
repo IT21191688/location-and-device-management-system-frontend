@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { showErrorToast, showSuccessToast } from "./services/AlertService";
 
 const AdminHomeDevices = () => {
-  const [devices, setDevices] = useState<any[]>([]);
+  const [devices, setDevices] = useState<any>([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchDevices();
@@ -72,11 +73,22 @@ const AdminHomeDevices = () => {
     }
   };
 
+  const filteredDevices = devices.filter((device: any) =>
+    device.serialnumber.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="min-h-screen bg-gray-100 py-6 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800">All Devices</h1>
+          <input
+            type="text"
+            placeholder="Search by serialnumber"
+            className="border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 mr-4"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
           <Link
             to="/addNewDevice"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
@@ -97,7 +109,7 @@ const AdminHomeDevices = () => {
               </tr>
             </thead>
             <tbody className="text-gray-600 text-sm font-light">
-              {devices.map((device: any) => (
+              {filteredDevices.map((device: any) => (
                 <tr
                   key={device._id}
                   className="border-b border-gray-200 hover:bg-gray-100"

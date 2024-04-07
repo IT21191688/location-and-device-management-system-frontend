@@ -217,7 +217,7 @@ const AdminHomeLocations = () => {
                           e.stopPropagation(); // Prevent click event from bubbling up to the row
                           handleDeleteClick(location._id);
                         }}
-                        className="text-white bg-green-500 hover:bg-green-700 font-bold py-1 px-3 rounded transition-colors duration-300"
+                        className="text-white bg-red-400 hover:bg-red-700 font-bold py-1 px-3 rounded transition-colors duration-300"
                       >
                         Delete
                       </button>

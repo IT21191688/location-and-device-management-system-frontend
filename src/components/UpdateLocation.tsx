@@ -77,7 +77,7 @@ const UpdateLocation = () => {
       );
 
       showSuccessToast("Location updated successfully!");
-      navigate("/adminHome");
+      navigate("/adminHomeLocations");
     } catch (error) {
       console.error("Error updating location:", error);
       showErrorToast("Error updating location");
