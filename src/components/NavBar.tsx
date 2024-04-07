@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSignInAlt,
-  faUserPlus,
-  faSignOutAlt,
-} from "@fortawesome/free-solid-svg-icons";
-//import Logo from "../assets/Logo.jpg";
+import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import Logo from "../assets/logo.jpg";
 
 export default function NavBar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -29,7 +25,7 @@ export default function NavBar() {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <img
-              //src={Logo}
+              src={Logo}
               alt="Logo"
               className="h-12 w-12 rounded-full object-cover"
             />
@@ -64,12 +60,12 @@ export default function NavBar() {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a
+                    {/* <a
                       className="nav-link bg-teal-400 rounded text-black px-4 py-2"
                       href="/register"
                     >
                       <FontAwesomeIcon icon={faUserPlus} /> Register
-                    </a>
+                    </a> */}
                   </li>
                 </>
               )}
