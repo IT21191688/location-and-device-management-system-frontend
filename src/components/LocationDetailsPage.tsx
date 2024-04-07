@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { showErrorToast, showSuccessToast } from "./services/AlertService";
 
 const LocationDetailsPage = () => {
@@ -133,6 +133,33 @@ const LocationDetailsPage = () => {
     }
   };
 
+  const updateStatus = async (deviceId: any, updatedStstus: any) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        return;
+      }
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const deviceData = {
+        status: updatedStstus,
+      };
+      await axios.put(
+        "http://localhost:8008/api/v1/device/updateDevice/" + deviceId,
+        deviceData,
+        { headers }
+      );
+      showSuccessToast("Device Update Status Successfully");
+      fetchDevices();
+    } catch (error) {
+      console.error("Error removing device:", error);
+      showErrorToast("Error removing device");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 py-6 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -150,10 +177,23 @@ const LocationDetailsPage = () => {
         </div>
         <div className="bg-white shadow-md rounded-lg overflow-hidden mb-8">
           <div className="p-6">
-            <h2 className="text-2xl font-semibold mb-2">{location.name}</h2>
-            <p className="text-gray-600">{location.address}</p>
+            <div className="flex flex-col space-y-2">
+              <div className="flex items-center">
+                <span className="text-gray-600 mr-2">Name:</span>
+                <h2 className="text-lg font-semibold">{location.name}</h2>
+              </div>
+              <div className="flex items-center">
+                <span className="text-gray-600 mr-2">Phone:</span>
+                <h2 className="text-lg font-semibold">{location.phone}</h2>
+              </div>
+              <div className="flex items-center">
+                <span className="text-gray-600 mr-2">Address:</span>
+                <p className="text-lg">{location.address}</p>
+              </div>
+            </div>
           </div>
         </div>
+
         {devices.length === 0 ? (
           <p className="text-gray-600 text-lg text-center">
             No devices found in this location.
@@ -184,7 +224,7 @@ const LocationDetailsPage = () => {
                   <p className="text-gray-600 mb-4">Status:</p>
                   <select
                     value={device.status}
-                    //onChange={(e) => updateStatus(device._id, e.target.value)}
+                    onChange={(e) => updateStatus(device._id, e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="active">Active</option>
@@ -198,7 +238,6 @@ const LocationDetailsPage = () => {
                   >
                     Remove
                   </button>
-                  {/* Add other actions like edit or more */}
                 </div>
               </div>
             ))}
@@ -206,23 +245,31 @@ const LocationDetailsPage = () => {
         )}
       </div>
 
-      {/* Modal for adding new device */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-">
             <h2 className="text-2xl font-semibold mb-4">Add New Device</h2>
-            <p>SELECT SERIAL NUMBER</p>
-            <div className="flex flex-col gap-4">
-              {unallocatedDevices.map((device: any) => (
-                <button
-                  key={device._id}
-                  onClick={() => addDeviceToLocation(device._id)}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
-                >
-                  {device.serialnumber}
-                </button>
-              ))}
-            </div>
+            {unallocatedDevices.length > 0 ? (
+              <>
+                <p>SELECT SERIAL NUMBER</p>
+                <div className="flex flex-col gap-4">
+                  {unallocatedDevices.map((device: any) => (
+                    <button
+                      key={device._id}
+                      onClick={() => addDeviceToLocation(device._id)}
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
+                    >
+                      {device.serialnumber}
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <p className="text-gray-600">
+                All Devices Allocated. Please Add New Device or Get From Another
+                Location
+              </p>
+            )}
             <button
               onClick={() => setShowModal(false)}
               className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded transition-colors duration-300 mt-4"

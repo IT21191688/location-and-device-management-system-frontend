@@ -4,7 +4,6 @@ import { ToastContainer } from "react-toastify";
 import "./App.css";
 import AdminHome from "./components/AdminHome";
 import NavBar from "./components/NavBar";
-import AdminRegister from "./components/AdminRegister";
 import LoginPage from "./components/LoginPage";
 import AddNewLocation from "./components/AddNewLocation";
 import UpdateLocation from "./components/UpdateLocation";
@@ -13,6 +12,8 @@ import AdminHomeDevices from "./components/AdminHomeDevices";
 import AddNewDevice from "./components/AddNewDevice";
 import UpdateDevice from "./components/UpdateDevice";
 import LocationDetailsPage from "./components/LocationDetailsPage";
+import UserManagement from "./components/UserManagement";
+import AddNewAdmin from "./components/AddNewAdmin";
 
 function App() {
   const [user, setUser] = useState<string | null>(null);
@@ -31,7 +32,7 @@ function App() {
           {/* {user === "admin" && <Route path="/" element={<UserHomePage />} />} */}
           {user === "user" && (
             <>
-              <Route path="/register" element={<AdminRegister />} />
+              <Route path="/adminRegister" element={<AddNewAdmin />} />
 
               <Route path="/adminHome" element={<AdminHome />} />
 
@@ -59,6 +60,8 @@ function App() {
                 path="/locationDetailsPage/:locationId"
                 element={<LocationDetailsPage />}
               />
+
+              <Route path="/userManagement" element={<UserManagement />} />
             </>
           )}
           <Route path="/" element={<LoginPage />} />
