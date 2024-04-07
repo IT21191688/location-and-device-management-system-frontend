@@ -30,7 +30,7 @@ function App() {
 
         <Routes>
           {/* {user === "admin" && <Route path="/" element={<UserHomePage />} />} */}
-          {user === "user" && (
+          {user === "admin" && (
             <>
               <Route path="/adminRegister" element={<AddNewAdmin />} />
 

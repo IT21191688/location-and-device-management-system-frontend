@@ -75,7 +75,7 @@ const AdminHomeLocations = () => {
         (device: any) => device.location === locationId
       );
 
-      alert(devicesToUpdate);
+      //alert(devicesToUpdate);
 
       await Promise.all(
         devicesToUpdate.map(async (device: any) => {
