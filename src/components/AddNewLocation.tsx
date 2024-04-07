@@ -45,7 +45,7 @@ const AddNewLocation = () => {
 
       showSuccessToast("Location added successfully!");
       setTimeout(() => {
-        navigate("/adminHomeLocation");
+        navigate("/adminHomeLocations");
       }, 2000);
     } catch (error) {
       console.error("Error creating location:", error);

@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { showErrorToast } from "./services/AlertService";
+import { showErrorToast, showSuccessToast } from "./services/AlertService";
 
 const AdminHomeLocations = () => {
   const [locations, setLocations] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [devices, setDevices] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchLocations();
+    fetchDevices();
   }, []);
 
   const fetchLocations = async () => {
@@ -54,6 +56,103 @@ const AdminHomeLocations = () => {
 
   const handleNavigateRowClick = (locationId: any) => {
     navigate(`/locationDetailsPage/${locationId}`);
+  };
+
+  const handleDeleteClick = async (locationId: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        return;
+      }
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      // Find all devices with the specified locationId
+      const devicesToUpdate = devices.filter(
+        (device: any) => device.location === locationId
+      );
+
+      alert(devicesToUpdate);
+
+      await Promise.all(
+        devicesToUpdate.map(async (device: any) => {
+          removeDevice(device._id);
+        })
+      );
+
+      await axios.delete(
+        `http://localhost:8008/api/v1/location/deleteLocation/${locationId}`,
+        { headers }
+      );
+
+      setDevices((prevDevices: any) =>
+        prevDevices.map((device: any) => ({
+          ...device,
+          // Update the location field of associated devices to null
+          location: devicesToUpdate.some((d: any) => d._id === device._id)
+            ? null
+            : device.location,
+        }))
+      );
+
+      showSuccessToast("Location deleted successfully");
+      fetchLocations();
+    } catch (error) {
+      console.error("Error deleting location:", error);
+      showErrorToast("Error deleting location");
+    }
+  };
+
+  const removeDevice = async (deviceId: any) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        return;
+      }
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const deviceData = {
+        location: null,
+      };
+      await axios.put(
+        "http://localhost:8008/api/v1/device/updateDevice/" + deviceId,
+        deviceData,
+        { headers }
+      );
+      showSuccessToast("Device removed successfully");
+      fetchDevices();
+    } catch (error) {
+      console.error("Error removing device:", error);
+      showErrorToast("Error removing device");
+    }
+  };
+
+  const fetchDevices = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token is missing in localStorage");
+        return;
+      }
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.get(
+        "http://localhost:8008/api/v1/device/getAllDevices",
+        { headers }
+      );
+
+      setDevices(response.data.data);
+    } catch (error) {
+      console.error("Error fetching devices:", error);
+      showErrorToast("Error fetching devices");
+    }
   };
 
   const filteredLocations = locations.filter((location: any) =>
@@ -113,6 +212,15 @@ const AdminHomeLocations = () => {
                   </td>
                   <td className="py-3 px-6 text-center whitespace-nowrap">
                     <div className="flex justify-center">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent click event from bubbling up to the row
+                          handleDeleteClick(location._id);
+                        }}
+                        className="text-white bg-green-500 hover:bg-green-700 font-bold py-1 px-3 rounded transition-colors duration-300"
+                      >
+                        Delete
+                      </button>
                       <button
                         onClick={(e) => {
                           e.stopPropagation(); // Prevent click event from bubbling up to the row
