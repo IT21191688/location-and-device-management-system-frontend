@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { showErrorToast } from "./services/AlertService";
@@ -52,6 +52,10 @@ const AdminHomeLocations = () => {
     navigate(`/updateLocation/${locationId}`);
   };
 
+  const handleNavigateRowClick = (locationId: any) => {
+    navigate(`/locationDetailsPage/${locationId}`);
+  };
+
   const filteredLocations = locations.filter((location: any) =>
     location.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -93,6 +97,7 @@ const AdminHomeLocations = () => {
                 <tr
                   key={location._id}
                   className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => handleNavigateRowClick(location._id)}
                 >
                   <td className="py-3 px-6 text-left whitespace-nowrap">
                     {location.name}
@@ -108,14 +113,11 @@ const AdminHomeLocations = () => {
                   </td>
                   <td className="py-3 px-6 text-center whitespace-nowrap">
                     <div className="flex justify-center">
-                      <Link
-                        to={`/location/${location._id}`}
-                        className="text-blue-500 hover:underline mr-2"
-                      >
-                        View Machines
-                      </Link>
                       <button
-                        onClick={() => handleUpdateClick(location._id)}
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent click event from bubbling up to the row
+                          handleUpdateClick(location._id);
+                        }}
                         className="text-white bg-green-500 hover:bg-green-700 font-bold py-1 px-3 rounded transition-colors duration-300"
                       >
                         Update

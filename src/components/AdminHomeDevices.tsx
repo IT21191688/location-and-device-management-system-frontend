@@ -22,20 +22,21 @@ const AdminHomeDevices = () => {
       };
       const response = await axios.get(
         "http://localhost:8008/api/v1/device/getAllDevices",
-        {
-          headers,
-        }
+        { headers }
       );
       const updatedDevices = await Promise.all(
         response.data.data.map(async (device: any) => {
-          const locationResponse = await axios.get(
-            `http://localhost:8008/api/v1/location/getOneLocation/${device.location}`,
-            {
-              headers,
-            }
-          );
-          const locationName = locationResponse.data.data.name;
-          return { ...device, location: locationName };
+          if (device.location) {
+            const locationResponse = await axios.get(
+              `http://localhost:8008/api/v1/location/getOneLocation/${device.location}`,
+              { headers }
+            );
+            const locationName = locationResponse.data.data.name;
+            return { ...device, location: locationName };
+          } else {
+            // If location is null, set locationName as null
+            return { ...device, location: "ALLOCATED REMOVED" };
+          }
         })
       );
       setDevices(updatedDevices);
@@ -122,12 +123,6 @@ const AdminHomeDevices = () => {
                   </td>
                   <td className="py-3 px-6 text-center whitespace-nowrap">
                     <div className="flex justify-center">
-                      <Link
-                        to={`/device/${device._id}`}
-                        className="text-blue-500 hover:underline mr-2"
-                      >
-                        View Details
-                      </Link>
                       <button
                         onClick={() => handleDelete(device._id)}
                         className="text-white bg-red-500 hover:bg-red-700 font-bold py-1 px-3 rounded mr-2 transition-colors duration-300"
@@ -135,7 +130,7 @@ const AdminHomeDevices = () => {
                         Delete
                       </button>
                       <Link
-                        to={`/device/update/${device._id}`}
+                        to={`/updateDevice/${device._id}`}
                         className="text-white bg-green-500 hover:bg-green-700 font-bold py-1 px-3 rounded transition-colors duration-300"
                       >
                         Update

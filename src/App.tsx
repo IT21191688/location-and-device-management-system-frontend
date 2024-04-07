@@ -11,6 +11,8 @@ import UpdateLocation from "./components/UpdateLocation";
 import AdminHomeLocations from "./components/AdminHomeLocations";
 import AdminHomeDevices from "./components/AdminHomeDevices";
 import AddNewDevice from "./components/AddNewDevice";
+import UpdateDevice from "./components/UpdateDevice";
+import LocationDetailsPage from "./components/LocationDetailsPage";
 
 function App() {
   const [user, setUser] = useState<string | null>(null);
@@ -30,19 +32,33 @@ function App() {
           {user === "user" && (
             <>
               <Route path="/register" element={<AdminRegister />} />
+
+              <Route path="/adminHome" element={<AdminHome />} />
+
+              <Route path="/adminHomeDevices" element={<AdminHomeDevices />} />
+
+              <Route path="/addNewDevice" element={<AddNewDevice />} />
+
+              <Route
+                path="/updateDevice/:deviceId"
+                element={<UpdateDevice />}
+              />
+
+              <Route path="/addNewLocation" element={<AddNewLocation />} />
+
               <Route
                 path="/adminHomeLocations"
                 element={<AdminHomeLocations />}
               />
-              <Route path="/addNewLocation" element={<AddNewLocation />} />
-              <Route path="/adminHome" element={<AdminHome />} />
-              <Route path="/adminHomeDevices" element={<AdminHomeDevices />} />
-              <Route path="/addNewDevice" element={<AddNewDevice />} />
               <Route
                 path="/updateLocation/:locationId"
                 element={<UpdateLocation />}
               />
-              <Route path="/viewAllDevices" element={<UpdateLocation />} />
+
+              <Route
+                path="/locationDetailsPage/:locationId"
+                element={<LocationDetailsPage />}
+              />
             </>
           )}
           <Route path="/" element={<LoginPage />} />
