@@ -1,30 +1,53 @@
-# React + TypeScript + Vite
+# Device & Location Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the Device & Location Management System! This application allows users to manage devices and their respective locations.
 
-Currently, two official plugins are available:
+## Git Links
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Backend Source Code Repository: [location-and-device-management-system-backend](https://github.com/IT21191688/location-and-device-management-system-backend)
+- Frontend Source Code Repository: [location-and-device-management-system-frontend](https://github.com/IT21191688/location-and-device-management-system-frontend)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### User Authentication
+Users can securely log in using JWT token authentication.
 
-- Configure the top-level `parserOptions` property like this:
+### Device Management
+- Admins can view, add, remove, and edit device details.
+- Device locations can be specified and images uploaded.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Location Management
+- Admins can view location details and device allocations.
+- Detailed pages allow management of devices and status changes.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### User Management
+Role-based authentication allows admin privilege management.
+
+### Mail Service
+Nodemailer sends registration confirmation emails.
+
+### Design
+The frontend, built with React and Vite, offers a fast and user-friendly interface.
+
+## Technologies Used
+
+- Backend: Node.js with TypeScript, Express.js
+- Frontend: React with Vite
+- Database: MongoDB
+- Storage: Cloudinary
+
+## Installation
+
+1. Clone the repository.
+2. Install dependencies using `npm i` or `npm i --force`.
+
+## Run Commands
+
+- Backend: `npm run dev`
+- Frontend: `npm run dev`
+
+## Sample Credentials
+
+- Username: sadeepa1234@gmail.com
+- Password: sadeepa1234
+
